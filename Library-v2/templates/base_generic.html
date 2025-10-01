@@ -1,0 +1,38 @@
+{% load tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}My Library{% endblock %}</title>
+  {% tailwind_css %}
+</head>
+<body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <header class="bg-white shadow-md">
+    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-indigo-600">📚 My Library</h1>
+      <nav class="space-x-6">
+        <a href="/" class="hover:text-indigo-600">Home</a>
+        <a href="#" class="hover:text-indigo-600">Books</a>
+        <a href="#" class="hover:text-indigo-600">About</a>
+        <a href="#" class="hover:text-indigo-600">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main content -->
+  <main class="flex-grow container mx-auto px-6 py-8">
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-100 border-t">
+    <div class="container mx-auto px-6 py-4 text-center text-gray-600 text-sm">
+      © 2025 My Library · Built with ❤️ + TailwindCSS
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -23,6 +23,17 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Stage 2: Production stage
 FROM python:3.12-slim
 
+
+# Install system dependencies: curl, Node.js, npm, Postgres client
+RUN apt update && apt install -y \
+    curl \
+    postgresql-client \
+    && curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt install -y nodejs \
+    && npm install -g npm@latest \
+    && rm -rf /var/lib/apt/lists/*
+
+
 RUN useradd -m -r appuser && \
     mkdir /app && \
     chown -R appuser /app
@@ -35,8 +46,8 @@ COPY --from=builder /usr/local/bin/ /usr/local/bin/
 # Set the working directory
 WORKDIR /app
 
-# Copy application code
-COPY --chown=appuser:appuser . .
+# Copy application code --chown=appuser:appuser
+COPY . .
 
 
 # Set environment variables to optimize Python
@@ -45,7 +56,7 @@ ENV PYTHONUNBUFFERED=1
 
 
 # Switch to non-root user
-USER appuser
+# USER appuser
 
 # Expose the application port
 EXPOSE 8000
